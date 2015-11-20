@@ -10,6 +10,9 @@
     list-style: none;
     font-family: 'Source Sans Pro', sans-serif;
 }
+del {
+    text-decoration: line-through;
+}
 /*:before, :after{ transition: all 0.5s; }*/
 
 /* TAGS */
