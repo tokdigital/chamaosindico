@@ -130,7 +130,7 @@ function userRegisters(_email, _nome, _estado, _cidade, _bairro){
                 db.transaction(function(tx) {
                     tx.executeSql('INSERT INTO myTable ( logado, email, nome, bairro_id, bairro_nome, cidade, estado) VALUES (1, "' + $('#reg_mail').val() +  '", "' + $('#reg_name').val() + '", ' + $('#reg_neighborhood').val() + ', "' + $('#reg_neighborhood option:selected').html() + '","' + $('#reg_city option:selected').html() + '","' + $('#reg_state option:selected').html() + '")');
                 });
-//                location.href = 'page/home.html';
+                setTimeout(function(){location.href = 'page/home.html';},2000);
             }
         }
    }); 
@@ -146,13 +146,13 @@ function initIndex(){
         $('body').on('change', '#reg_state', function(){registrationForm(2)});
         $('body').on('change', '#reg_city', function(){registrationForm(3)});
         $('body').on('change', '#reg_neighborhood', function(){
-            $('#block_reg_neighborhood').addClass('none');
+//            $('#block_reg_neighborhood').addClass('none');
             $('#btn_registrar').removeClass('none');
         });
         $('#btn_registrar').click(
             function(){
                 if($('#reg_name').val()){
-                    userRegisters($('#reg_mail').val(), $('#reg_name').val(), $('#reg_state').val(), $('#reg_city').val(), $('#reg_neighborhood').val());
+                    userRegisters($('#reg_mail').val(), $('#reg_name').val(), $('#reg_state option:selected').html(), $('#reg_city option:selected').html(), $('#reg_neighborhood').val());
                 }else{                
                     $('#reg_erro_name').removeClass('none');
                 }

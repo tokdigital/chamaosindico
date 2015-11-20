@@ -1,7 +1,7 @@
 $(function(){
     db.transaction(function(tx) {
     tx.executeSql('SELECT * FROM myTable WHERE logado=?', [1], function (tx, resultado) {
-        if(resultado.rows.length > 1){
+        if(resultado.rows.length > 0){
             var rows = resultado.rows[0];
 
             logado = rows.logado;
@@ -12,7 +12,7 @@ $(function(){
             cidade = rows.cidade;
             estado = rows.estado;
 
-//            location.href = 'page/home.html';        
+            location.href = 'page/home.html';        
         }else{
             initIndex();            
         }
