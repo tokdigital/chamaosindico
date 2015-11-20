@@ -80,6 +80,9 @@ input[type="text"]{
     text-align: center;
     font-size: small;
 }
+.teste{
+    background: red;
+}
 .name-fantasy{
     line-height: 40px;
 }
