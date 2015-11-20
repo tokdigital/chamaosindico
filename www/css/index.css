@@ -22,6 +22,7 @@ p{
     font-family: 'Source Sans Pro', sans-serif;
 }
 img{
+    border: none;
     display: block;
     max-width: 100%;
     height: auto;
