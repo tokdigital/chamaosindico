@@ -1,0 +1,135 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    outline: none;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+/*:before, :after{ transition: all 0.5s; }*/
+
+/* TAGS */
+
+body{ 
+    font-family: 'Source Sans Pro', sans-serif;
+    background: #eeeeee;
+}
+p{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+img{
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.none{
+    display: none;
+}
+.clear{
+    clear: both;
+}
+.logo-mobile{
+    margin: auto;
+    padding: 44px;
+}
+.container-app{
+    width: 100%;
+    padding: 10px 20px;
+}
+.container-app h1{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 33px;
+}
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="text"]{
+    width: 100%;
+    border-radius: 5px;
+    border: solid 1px #ccc; 
+    padding: 9px 20px;
+    margin-bottom: 11px;
+}
+.button{
+    width: 100%;
+    background-color: #447565;
+    border-radius: 5px;
+    font-size: 18px;
+    padding: 9px 20px;
+    border: none;
+    color: #fff;
+}
+/*CATEGORIAS*/
+
+.logo_app{
+    width: 40px;
+    height: 40px;
+    float: left;
+    margin: 0 10px;
+}
+#user-local {
+    clear: both;
+    text-align: center;
+    font-size: small;
+}
+.name-fantasy{
+    line-height: 40px;
+}
+.category {
+    position: relative;
+    width: 48vw;
+    height: 48vw;
+    float: left;
+    margin: 1vw;
+}
+.category figure {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 50%;
+    overflow: hidden;
+    float: left;
+}
+.category figure:after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    left: 0;
+    box-shadow: inset 0 0 10px #fff;
+}
+.category-1 figure {
+    height: 100%;
+    width: 100%;
+}
+.category-2 figure {
+    height: 100%;
+}
+.category-3 figure:first-child {
+    height: 100%;
+}
+.category img {
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: none;
+}
+.category h2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+}

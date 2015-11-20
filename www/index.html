@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+<!--        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+<!--        <meta name="format-detection" content="telephone=no">-->
+<!--        <meta name="msapplication-tap-highlight" content="no">-->
+<!--        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">-->
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/fonts.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/functions.js"></script>
+        <script src="js/index.js"></script>
+        <title>Cadastro</title>
+    </head>
+    <body>
+        <section class="container-app">
+        <img class="logo-mobile" src="img/mobileapp.png"/>
+            <h1>Severino Serviços e Reparos</h1>
+        <section id="wrapper" class="wrapper">
+            <form id="form_login_mail" method="post" action="#">
+                <input name="reg_mail" id="reg_mail" type="email" placeholder="Digite seu e-mail" />
+                <input class="button" type="button" value="Próximo »" id="btn_prox" />
+            </form>
+            <form id="form_login_pass" class="none" method="post" action="#">
+                <h1 id="name_user"></h1>
+                <input type="password" name="reg_pass" id="reg_pass" placeholder="Digite sua senha" />
+                <input type="hidden" name="reg_id" id="reg_id" />
+                <spam id="reg_erro_senha" class="none">Senha Incorreta <a href="#">Esqueceu sua senha</a></spam>
+                <input class="button" type="button" value="Entrar »" id="btn_entrar" />
+            </form>
+            <form id="form_login_data" class="none" method="post" action="#">
+                <input type="text" name="reg_name" id="reg_name" placeholder="Digite seu nome" />   
+                <p class="none" id="reg_erro_name">Digite seu nome</p>
+                <input class="button none" type="button" value="Entrar »" id="btn_registrar" />
+            </form>
+        </section>
+            </section>
+    </body>
+</html>
