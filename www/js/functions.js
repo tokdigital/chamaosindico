@@ -1,3 +1,23 @@
+/* DATABASE */
+
+var db = openDatabase("appDB", "1.0", "APP database", 2 * 1024 * 1024);
+    
+    db.transaction(function(tx) {
+//        tx.executeSql("DROP TABLE myTable" );
+        tx.executeSql("CREATE TABLE IF NOT EXISTS myTable ( logado INTEGER, email TEXT, nome TEXT, bairro_id INTEGER, bairro_nome TEXT, cidade TEXT, estado TEXT )" );
+//        tx.executeSql('INSERT INTO myTable ( logado, email, nome, bairro_id, bairro_nome, cidade, estado) VALUES ("a", "b", 1, "c","a", "b", "c")');
+    });
+
+var logado = '';
+var email = '';
+var nome = '';
+var bairro_id = '';
+var bairro_nome = '';
+var cidade = '';
+var estado = '';
+
+/* */
+
 function emailChecks(_email){
     $.ajax({
         url: 'http://192.168.1.10/app/login/',
@@ -30,6 +50,9 @@ function passwordChecks(_id, _senha){
         success: function(data){
             $('#form_login_mail').addClass('none');
             if(data){
+                db.transaction(function(tx) {
+                    tx.executeSql('INSERT INTO myTable ( logado, email, nome, bairro_id, bairro_nome, cidade, estado) VALUES (1, "' + $('#reg_mail').val() +  '", "' + $('#name_user').html() + '", ' + data.bairro_id + ', "' + data.bairro_nome + '","' + data.cidade + '","' + data.estado + '")');
+                });
                 location.href = 'page/home.html';
             }else{
                 $('#reg_erro_senha').removeClass('none');
@@ -63,7 +86,7 @@ function registrationForm(_step){
                 cat: $('#reg_state').val()
             },
             success: function(data){
-                $('#block_reg_state').addClass('none');
+//                $('#block_reg_state').addClass('none');
                 var cidades = '<p id="block_reg_city"><label for="reg_city">Selecione uma cidade: </label><select name="reg_city" id="reg_city"><option disabled selected>Selecione...</option>';
                 for(var x in data) { 
                     cidades += '<option value="' + data[x].term_id + '">' + data[x].name + '</option>';
@@ -83,8 +106,8 @@ function registrationForm(_step){
                 cat: $('#reg_city').val()
             },
             success: function(data){
-                $('#block_reg_city').addClass('none');
-                var bairro = '<p id="block_reg_neighborhood"><label for="reg_neighborhood">Selecione uma cidade: </label><select name="reg_neighborhood" id="reg_neighborhood"><option disabled selected>Selecione...</option>';
+//                $('#block_reg_city').addClass('none');
+                var bairro = '<p id="block_reg_neighborhood"><label for="reg_neighborhood">Selecione um bairro: </label><select name="reg_neighborhood" id="reg_neighborhood"><option disabled selected>Selecione...</option>';
                 for(var x in data) { 
                     bairro += '<option value="' + data[x].term_id + '">' + data[x].name + '</option>';
                 }
@@ -104,16 +127,63 @@ function userRegisters(_email, _nome, _estado, _cidade, _bairro){
 //        dataType: 'json', 
         success: function(data){
             if(data){
-                location.href = 'page/home.html';
+                db.transaction(function(tx) {
+                    tx.executeSql('INSERT INTO myTable ( logado, email, nome, bairro_id, bairro_nome, cidade, estado) VALUES (1, "' + $('#reg_mail').val() +  '", "' + $('#reg_name').val() + '", ' + $('#reg_neighborhood').val() + ', "' + $('#reg_neighborhood option:selected').html() + '","' + $('#reg_city option:selected').html() + '","' + $('#reg_state option:selected').html() + '")');
+                });
+//                location.href = 'page/home.html';
             }
         }
    }); 
 }
 
+/* INDEX */
+
+function initIndex(){
+    registrationForm();
+
+        $('#btn_prox').click(function(){emailChecks($('#reg_mail').val())});
+        $('#btn_entrar').click(function(){passwordChecks($('#reg_id').val(), $('#reg_pass').val());});
+        $('body').on('change', '#reg_state', function(){registrationForm(2)});
+        $('body').on('change', '#reg_city', function(){registrationForm(3)});
+        $('body').on('change', '#reg_neighborhood', function(){
+            $('#block_reg_neighborhood').addClass('none');
+            $('#btn_registrar').removeClass('none');
+        });
+        $('#btn_registrar').click(
+            function(){
+                if($('#reg_name').val()){
+                    userRegisters($('#reg_mail').val(), $('#reg_name').val(), $('#reg_state').val(), $('#reg_city').val(), $('#reg_neighborhood').val());
+                }else{                
+                    $('#reg_erro_name').removeClass('none');
+                }
+            }
+        );
+}
+
 /* HOME */
 
+function initHome(){
+    $('#user-local').html(cidade + ' / ' + estado + '<br />' + bairro_nome);
+    $('body').on('click', '#list-nav #itens-category li', 
+        function(){ 
+            $('#list-nav').append('<input type="hidden" name="cat_id" id="cat_id" />'); 
+            $('#cat_id').val($(this).attr('value'));
+            $('#wrapper').attr('page','category');
+            $('#wrapper').attr('ref',$(this).attr('value'));
+            constructListaEmpresa();
+    });
+    
+    $('body').on('click', '#list-nav #itens-empresas li', 
+        function(){ 
+            $('#wrapper').attr('page','product');
+            constructEmpresa($(this).attr('value'));
+    });
+    
+    constructorHome();
+}
+
 function constructorHome(){
-    var local = 10;
+    var local = bairro_id;
     $.ajax({
         url: 'http://192.168.1.10/app/loop-de-categoria/',
         type:"POST",
@@ -155,7 +225,7 @@ function sortObject(obj) {
 
 /* LISTA EMPRESAS */
 function constructListaEmpresa(){
-    var obj = { 'local': 10, 'cat': $('#cat_id').val() };
+    var obj = { 'local': bairro_id, 'cat': $('#cat_id').val() };
     $.ajax({
         url: 'http://192.168.1.10/app/loop-de-empresa/',
         type:"POST",

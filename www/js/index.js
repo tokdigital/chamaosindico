@@ -1,21 +1,24 @@
 $(function(){
-    registrationForm();
-    
-    $('#btn_prox').click(function(){emailChecks($('#reg_mail').val())});
-    $('#btn_entrar').click(function(){passwordChecks($('#reg_id').val(), $('#reg_pass').val());});
-    $('body').on('change', '#reg_state', function(){registrationForm(2)});
-    $('body').on('change', '#reg_city', function(){registrationForm(3)});
-    $('body').on('change', '#reg_neighborhood', function(){
-        $('#block_reg_neighborhood').addClass('none');
-        $('#btn_registrar').removeClass('none');
-    });
-    $('#btn_registrar').click(
-        function(){
-            if($('#reg_name').val()){
-                userRegisters($('#reg_mail').val(), $('#reg_name').val(), $('#reg_state').val(), $('#reg_city').val(), $('#reg_neighborhood').val());
-            }else{                
-                $('#reg_erro_name').removeClass('none');
-            }
+    db.transaction(function(tx) {
+    tx.executeSql('SELECT * FROM myTable WHERE logado=?', [1], function (tx, resultado) {
+        if(resultado.rows.length > 1){
+            var rows = resultado.rows[0];
+
+            logado = rows.logado;
+            email = rows.email;
+            nome = rows.nome;
+            bairro_id = rows.bairro_id;
+            bairro_nome = rows.bairro_nome;
+            cidade = rows.cidade;
+            estado = rows.estado;
+
+//            location.href = 'page/home.html';        
+        }else{
+            initIndex();            
         }
-    );
+
+        },function (tx, error){
+          alert('ooops ' + error.message);
+        });
+    }); 
 });
